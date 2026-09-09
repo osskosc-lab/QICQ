@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import sys
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 import numpy as np
@@ -82,17 +83,22 @@ class QBGPhase0ATests(unittest.TestCase):
 
     def test_g4_rejects_non_trace_preserving_channel(self):
         rho = qbg.reference_states()["target_bell_proxy"]
-        bad_kraus = (0.5 * qbg.I2,)
-        out = qbg.apply_local_channel_a(rho, bad_kraus)
-        self.assertFalse(qbg.is_physical_density(out))
+        bad_out = 0.25 * rho
+        self.assertFalse(qbg.is_physical_density(bad_out))
 
-        # Directly reproduce the G4 validity requirement for a malformed
-        # would-be free operation: invalid output must never qualify.
-        self.assertFalse(
-            qbg.is_physical_density(out)
-            and qbg.negativity(out) - qbg.negativity(rho)
-            <= qbg.MONOTONICITY_TOL
-        )
+        def broken_local_channel(_rho, _kraus):
+            return bad_out
+
+        # Exercise the production G4 code path directly. If one frozen
+        # local-channel implementation were malformed, G4 must fail even
+        # though the reduced trace also reduces the raw negativity.
+        with patch.object(
+            qbg,
+            "apply_local_channel_a",
+            side_effect=broken_local_channel,
+        ):
+            ok, _ = qbg.monotonicity_audit(rho)
+        self.assertFalse(ok)
 
     def test_stochastic_mimics_are_ppt(self):
         for seed in range(20):
