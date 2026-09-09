@@ -80,6 +80,20 @@ class QBGPhase0ATests(unittest.TestCase):
                     qbg.MONOTONICITY_TOL,
                 )
 
+    def test_g4_rejects_non_trace_preserving_channel(self):
+        rho = qbg.reference_states()["target_bell_proxy"]
+        bad_kraus = (0.5 * qbg.I2,)
+        out = qbg.apply_local_channel_a(rho, bad_kraus)
+        self.assertFalse(qbg.is_physical_density(out))
+
+        # Directly reproduce the G4 validity requirement for a malformed
+        # would-be free operation: invalid output must never qualify.
+        self.assertFalse(
+            qbg.is_physical_density(out)
+            and qbg.negativity(out) - qbg.negativity(rho)
+            <= qbg.MONOTONICITY_TOL
+        )
+
     def test_stochastic_mimics_are_ppt(self):
         for seed in range(20):
             cases = qbg.stochastic_cases(20260909 + seed)
