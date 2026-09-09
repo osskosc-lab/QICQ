@@ -45,3 +45,12 @@ The QBG lockfile is itself a workflow trigger path. A numerical-environment chan
 ## Claim Firewall
 
 A v0.1.1 PASS still establishes only two-qubit synthetic resource-proxy gate mechanics. It does not establish causal nonseparability, a Quantum Switch, indefinite causal order, a biological quantum mechanism, consciousness, or ontology.
+
+
+### D4 — free-channel output validity
+
+G4 now treats physical output validity as a prerequisite for monotonicity.
+Every frozen local channel output must remain Hermitian, unit-trace, and PSD
+within the existing physical tolerance. A malformed or non-trace-preserving
+would-be free operation can no longer pass merely because it lowers
+negativity.
