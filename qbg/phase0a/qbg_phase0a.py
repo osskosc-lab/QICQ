@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""QICQ Quantum Behavior Qualification Gate (QBG) Phase 0A v0.1.
+"""QICQ Quantum Behavior Qualification Gate (QBG) Phase 0A v0.1.1.
 
 Synthetic two-qubit resource-proxy qualification only.
 
@@ -26,7 +26,7 @@ from typing import Dict, Iterable, List, Tuple
 
 import numpy as np
 
-VERSION = "0.1"
+VERSION = "0.1.1"
 DEFAULT_SEEDS = 100
 DEFAULT_BASE_SEED = 20260909
 PHYSICAL_TOL = 1e-10
@@ -118,6 +118,19 @@ def apply_local_channel_a(rho: np.ndarray, kraus: Iterable[np.ndarray]) -> np.nd
     out = np.zeros_like(rho, dtype=complex)
     for k in kraus:
         op = np.kron(k, I2)
+        out += op @ rho @ op.conj().T
+    return out
+
+
+def apply_local_channel_b(rho: np.ndarray, kraus: Iterable[np.ndarray]) -> np.ndarray:
+    """Apply a single-qubit channel to subsystem B.
+
+    Phase 0A v0.1 audited subsystem A only. The v0.1.1 debug hardening
+    explicitly checks the same frozen local free channels on both subsystems.
+    """
+    out = np.zeros_like(rho, dtype=complex)
+    for k in kraus:
+        op = np.kron(I2, k)
         out += op @ rho @ op.conj().T
     return out
 
@@ -214,9 +227,11 @@ def stochastic_cases(seed: int) -> Dict[str, np.ndarray]:
     }
 
 
-def monotonicity_audit(rho: np.ndarray) -> Tuple[bool, float]:
+def monotonicity_audit_details(rho: np.ndarray) -> Dict[str, object]:
+    """Audit frozen local free channels for validity and non-increase."""
     base = negativity(rho)
     max_increase = -np.inf
+    all_outputs_physical = True
     channels = [
         dephasing_kraus(0.25),
         dephasing_kraus(0.50),
@@ -225,10 +240,29 @@ def monotonicity_audit(rho: np.ndarray) -> Tuple[bool, float]:
         depolarizing_kraus(0.60),
     ]
     for ks in channels:
-        out = apply_local_channel_a(rho, ks)
-        inc = negativity(out) - base
-        max_increase = max(max_increase, inc)
-    return max_increase <= MONOTONICITY_TOL, float(max_increase)
+        for apply_channel in (apply_local_channel_a, apply_local_channel_b):
+            out = apply_channel(rho, ks)
+            all_outputs_physical = (
+                all_outputs_physical and is_physical_density(out)
+            )
+            inc = negativity(out) - base
+            max_increase = max(max_increase, inc)
+
+    monotonicity_only_pass = max_increase <= MONOTONICITY_TOL
+    return {
+        "pass": bool(
+            all_outputs_physical and monotonicity_only_pass
+        ),
+        "outputs_physical": bool(all_outputs_physical),
+        "monotonicity_only_pass": bool(monotonicity_only_pass),
+        "max_increase": float(max_increase),
+    }
+
+
+def monotonicity_audit(rho: np.ndarray) -> Tuple[bool, float]:
+    """Compatibility wrapper returning the original two-field result."""
+    details = monotonicity_audit_details(rho)
+    return bool(details["pass"]), float(details["max_increase"])
 
 
 def basis_invariance_audit(
@@ -280,6 +314,7 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
     all_physical = all(r["physical"] for r in ref_rows)
     all_basis = True
     all_mono = True
+    all_free_channel_outputs_physical = True
 
     for i in range(seeds):
         seed = base_seed + i
@@ -292,9 +327,21 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
             basis_ok, basis_delta = basis_invariance_audit(
                 rho, rng
             )
-            mono_ok, mono_inc = monotonicity_audit(rho)
+            mono_details = monotonicity_audit_details(rho)
+            mono_ok = bool(mono_details["pass"])
+            mono_inc = float(mono_details["max_increase"])
+            mono_outputs_physical = bool(
+                mono_details["outputs_physical"]
+            )
+            mono_only_ok = bool(
+                mono_details["monotonicity_only_pass"]
+            )
             all_basis = all_basis and basis_ok
             all_mono = all_mono and mono_ok
+            all_free_channel_outputs_physical = (
+                all_free_channel_outputs_physical
+                and mono_outputs_physical
+            )
             basis_max = max(basis_max, basis_delta)
             monotonicity_max = max(monotonicity_max, mono_inc)
 
@@ -322,6 +369,10 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
                     ),
                     "basis_invariance_pass": basis_ok,
                     "basis_max_abs_delta": basis_delta,
+                    "free_channel_outputs_physical": (
+                        mono_outputs_physical
+                    ),
+                    "monotonicity_only_pass": mono_only_ok,
                     "monotonicity_pass": mono_ok,
                     "monotonicity_max_increase": mono_inc,
                 }
@@ -422,6 +473,9 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
                 max(r["chsh_smax"] for r in mimic_rows)
             ),
             "basis_max_abs_delta": float(basis_max),
+            "free_channel_outputs_all_physical": bool(
+                all_free_channel_outputs_physical
+            ),
             "monotonicity_max_increase": float(
                 monotonicity_max
             ),
@@ -494,7 +548,7 @@ def main() -> None:
     result = run_qualification(args.seeds, args.base_seed)
     write_outputs(result, args.outdir)
 
-    print("QICQ QBG Phase 0A v0.1")
+    print(f"QICQ QBG Phase 0A v{VERSION}")
     print(result["warning"])
     for name, ok in result["gates"].items():
         print(f"{'PASS' if ok else 'FAIL'}  {name}")
