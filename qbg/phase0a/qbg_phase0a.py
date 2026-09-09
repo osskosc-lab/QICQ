@@ -26,7 +26,7 @@ from typing import Dict, Iterable, List, Tuple
 
 import numpy as np
 
-VERSION = "0.1"
+VERSION = "0.1.1"
 DEFAULT_SEEDS = 100
 DEFAULT_BASE_SEED = 20260909
 PHYSICAL_TOL = 1e-10
@@ -118,6 +118,19 @@ def apply_local_channel_a(rho: np.ndarray, kraus: Iterable[np.ndarray]) -> np.nd
     out = np.zeros_like(rho, dtype=complex)
     for k in kraus:
         op = np.kron(k, I2)
+        out += op @ rho @ op.conj().T
+    return out
+
+
+def apply_local_channel_b(rho: np.ndarray, kraus: Iterable[np.ndarray]) -> np.ndarray:
+    """Apply a single-qubit channel to subsystem B.
+
+    Phase 0A v0.1 audited subsystem A only. The v0.1.1 debug hardening
+    explicitly checks the same frozen local free channels on both subsystems.
+    """
+    out = np.zeros_like(rho, dtype=complex)
+    for k in kraus:
+        op = np.kron(I2, k)
         out += op @ rho @ op.conj().T
     return out
 
@@ -225,9 +238,10 @@ def monotonicity_audit(rho: np.ndarray) -> Tuple[bool, float]:
         depolarizing_kraus(0.60),
     ]
     for ks in channels:
-        out = apply_local_channel_a(rho, ks)
-        inc = negativity(out) - base
-        max_increase = max(max_increase, inc)
+        for apply_channel in (apply_local_channel_a, apply_local_channel_b):
+            out = apply_channel(rho, ks)
+            inc = negativity(out) - base
+            max_increase = max(max_increase, inc)
     return max_increase <= MONOTONICITY_TOL, float(max_increase)
 
 
