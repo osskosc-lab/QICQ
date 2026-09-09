@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""QICQ Quantum Behavior Qualification Gate (QBG) Phase 0A v0.1.
+"""QICQ Quantum Behavior Qualification Gate (QBG) Phase 0A v0.1.1.
 
 Synthetic two-qubit resource-proxy qualification only.
 
