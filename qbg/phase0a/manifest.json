@@ -1,0 +1,55 @@
+{
+  "protocol": "QICQ-QBG-P0A",
+  "version": "0.1",
+  "status": "FROZEN_SYNTHETIC_QUALIFICATION",
+  "claim_ceiling": "two-qubit resource-proxy gate mechanics only",
+  "seeds": 100,
+  "base_seed": 20260909,
+  "target": {
+    "family": "locally_rotated_werner_bell_proxy",
+    "werner_p_min": 0.75,
+    "werner_p_max": 1.0,
+    "negativity_min": 0.2
+  },
+  "free_set_proxy": "two_qubit_separable_states",
+  "mimics": [
+    "product_coherence",
+    "separable_memory_mixture",
+    "classical_common_cause_diagonal"
+  ],
+  "diagnostic_only": {
+    "q_delta": "off_diagonal_frobenius_norm"
+  },
+  "resource": {
+    "name": "entanglement_negativity",
+    "mimic_tolerance": 1e-9
+  },
+  "robustness": {
+    "physical_tolerance": 1e-10,
+    "basis_tolerance": 1e-9,
+    "monotonicity_tolerance": 1e-9,
+    "local_unitary_trials_per_case": 8,
+    "free_channels": [
+      "dephasing_lambda_0.25",
+      "dephasing_lambda_0.50",
+      "depolarizing_lambda_0.10",
+      "depolarizing_lambda_0.30",
+      "depolarizing_lambda_0.60"
+    ]
+  },
+  "optional_operational_witness": {
+    "name": "maximal_CHSH_Horodecki",
+    "target_min_strict": 2.000001,
+    "mimic_max": 2.000001
+  },
+  "core_gates": [
+    "G0_PHYSICAL_VALIDITY",
+    "G1_COHERENCE_NOT_SUFFICIENT",
+    "G2_TARGET_RESOURCE_EXCLUSION",
+    "G3_LOCAL_BASIS_ROBUSTNESS",
+    "G4_FREE_OPERATION_MONOTONICITY",
+    "G5_MIMIC_EXCLUSION"
+  ],
+  "optional_gate": "G6_OPTIONAL_CHSH_OPERATIONAL_WITNESS",
+  "phase0b_authorized_only_if": "all_core_gates_pass"
+}
