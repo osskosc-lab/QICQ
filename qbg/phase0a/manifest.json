@@ -1,14 +1,14 @@
 {
   "protocol": "QICQ-QBG-P0A",
-  "version": "0.1",
-  "status": "FROZEN_SYNTHETIC_QUALIFICATION",
+  "version": "0.1.1",
+  "status": "FROZEN_SYNTHETIC_QUALIFICATION_DEBUG_HARDENED",
   "claim_ceiling": "two-qubit resource-proxy gate mechanics only",
   "seeds": 100,
   "base_seed": 20260909,
   "target": {
     "family": "locally_rotated_werner_bell_proxy",
     "werner_p_min": 0.75,
-    "werner_p_max": 1.0,
+    "werner_p_max": 1,
     "negativity_min": 0.2
   },
   "free_set_proxy": "two_qubit_separable_states",
@@ -35,7 +35,8 @@
       "depolarizing_lambda_0.10",
       "depolarizing_lambda_0.30",
       "depolarizing_lambda_0.60"
-    ]
+    ],
+    "free_channels_scope": "apply_each_frozen_channel_independently_to_subsystem_A_and_subsystem_B"
   },
   "optional_operational_witness": {
     "name": "maximal_CHSH_Horodecki",
@@ -51,5 +52,14 @@
     "G5_MIMIC_EXCLUSION"
   ],
   "optional_gate": "G6_OPTIONAL_CHSH_OPERATIONAL_WITNESS",
-  "phase0b_authorized_only_if": "all_core_gates_pass"
+  "phase0b_authorized_only_if": "all_core_gates_pass",
+  "debug_hardening": {
+    "parent_version": "0.1",
+    "claim_ceiling_changed": false,
+    "fixes": [
+      "G4 now audits the frozen local channels on both local subsystems instead of subsystem A only",
+      "QBG CI uses the exact Python/NumPy/SciPy versions observed in the successful v0.1 qualification",
+      "the QBG lockfile is included in workflow path triggers"
+    ]
+  }
 }
