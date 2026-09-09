@@ -508,7 +508,7 @@ def main() -> None:
     result = run_qualification(args.seeds, args.base_seed)
     write_outputs(result, args.outdir)
 
-    print("QICQ QBG Phase 0A v0.1")
+    print(f"QICQ QBG Phase 0A v{VERSION}")
     print(result["warning"])
     for name, ok in result["gates"].items():
         print(f"{'PASS' if ok else 'FAIL'}  {name}")
