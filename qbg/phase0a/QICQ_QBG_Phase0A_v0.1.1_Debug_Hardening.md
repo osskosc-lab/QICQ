@@ -25,9 +25,9 @@ For every frozen G4 channel, the audit now checks the channel independently on s
 
 Pass condition remains:
 
-[
+$
 N(\Lambda_{A/B}(\rho)) - N(\rho) \le 10^{-9}.
-]
+$
 
 ### D2 — numerical environment lock
 
