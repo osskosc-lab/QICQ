@@ -227,14 +227,8 @@ def stochastic_cases(seed: int) -> Dict[str, np.ndarray]:
     }
 
 
-def monotonicity_audit(rho: np.ndarray) -> Tuple[bool, float]:
-    """Audit frozen local free channels for validity and non-increase.
-
-    A monotonicity PASS is only meaningful if every transformed output is
-    itself a valid density matrix. Invalid channel outputs therefore force
-    G4 to fail rather than being allowed to "pass" merely because the
-    resource value decreased.
-    """
+def monotonicity_audit_details(rho: np.ndarray) -> Dict[str, object]:
+    """Audit frozen local free channels for validity and non-increase."""
     base = negativity(rho)
     max_increase = -np.inf
     all_outputs_physical = True
@@ -253,10 +247,22 @@ def monotonicity_audit(rho: np.ndarray) -> Tuple[bool, float]:
             )
             inc = negativity(out) - base
             max_increase = max(max_increase, inc)
-    return (
-        all_outputs_physical
-        and max_increase <= MONOTONICITY_TOL
-    ), float(max_increase)
+
+    monotonicity_only_pass = max_increase <= MONOTONICITY_TOL
+    return {
+        "pass": bool(
+            all_outputs_physical and monotonicity_only_pass
+        ),
+        "outputs_physical": bool(all_outputs_physical),
+        "monotonicity_only_pass": bool(monotonicity_only_pass),
+        "max_increase": float(max_increase),
+    }
+
+
+def monotonicity_audit(rho: np.ndarray) -> Tuple[bool, float]:
+    """Compatibility wrapper returning the original two-field result."""
+    details = monotonicity_audit_details(rho)
+    return bool(details["pass"]), float(details["max_increase"])
 
 
 def basis_invariance_audit(
@@ -308,6 +314,7 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
     all_physical = all(r["physical"] for r in ref_rows)
     all_basis = True
     all_mono = True
+    all_free_channel_outputs_physical = True
 
     for i in range(seeds):
         seed = base_seed + i
@@ -320,9 +327,21 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
             basis_ok, basis_delta = basis_invariance_audit(
                 rho, rng
             )
-            mono_ok, mono_inc = monotonicity_audit(rho)
+            mono_details = monotonicity_audit_details(rho)
+            mono_ok = bool(mono_details["pass"])
+            mono_inc = float(mono_details["max_increase"])
+            mono_outputs_physical = bool(
+                mono_details["outputs_physical"]
+            )
+            mono_only_ok = bool(
+                mono_details["monotonicity_only_pass"]
+            )
             all_basis = all_basis and basis_ok
             all_mono = all_mono and mono_ok
+            all_free_channel_outputs_physical = (
+                all_free_channel_outputs_physical
+                and mono_outputs_physical
+            )
             basis_max = max(basis_max, basis_delta)
             monotonicity_max = max(monotonicity_max, mono_inc)
 
@@ -350,6 +369,10 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
                     ),
                     "basis_invariance_pass": basis_ok,
                     "basis_max_abs_delta": basis_delta,
+                    "free_channel_outputs_physical": (
+                        mono_outputs_physical
+                    ),
+                    "monotonicity_only_pass": mono_only_ok,
                     "monotonicity_pass": mono_ok,
                     "monotonicity_max_increase": mono_inc,
                 }
@@ -450,6 +473,9 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
                 max(r["chsh_smax"] for r in mimic_rows)
             ),
             "basis_max_abs_delta": float(basis_max),
+            "free_channel_outputs_all_physical": bool(
+                all_free_channel_outputs_physical
+            ),
             "monotonicity_max_increase": float(
                 monotonicity_max
             ),
