@@ -97,8 +97,10 @@ class QBGPhase0ATests(unittest.TestCase):
             "apply_local_channel_a",
             side_effect=broken_local_channel,
         ):
-            ok, _ = qbg.monotonicity_audit(rho)
-        self.assertFalse(ok)
+            details = qbg.monotonicity_audit_details(rho)
+        self.assertFalse(details["outputs_physical"])
+        self.assertTrue(details["monotonicity_only_pass"])
+        self.assertFalse(details["pass"])
 
     def test_stochastic_mimics_are_ppt(self):
         for seed in range(20):
