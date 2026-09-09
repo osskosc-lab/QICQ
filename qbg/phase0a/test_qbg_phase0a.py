@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic unit tests for QICQ QBG Phase 0A v0.1."""
+"""Deterministic unit tests for QICQ QBG Phase 0A v0.1.1."""
 
 from __future__ import annotations
 
@@ -57,6 +57,28 @@ class QBGPhase0ATests(unittest.TestCase):
             max_increase,
             qbg.MONOTONICITY_TOL,
         )
+
+    def test_local_channel_paths_cover_both_subsystems(self):
+        rho = qbg.reference_states()["target_bell_proxy"]
+        channels = (
+            qbg.dephasing_kraus(0.25),
+            qbg.dephasing_kraus(0.50),
+            qbg.depolarizing_kraus(0.10),
+            qbg.depolarizing_kraus(0.30),
+            qbg.depolarizing_kraus(0.60),
+        )
+        base = qbg.negativity(rho)
+        for apply_channel in (
+            qbg.apply_local_channel_a,
+            qbg.apply_local_channel_b,
+        ):
+            for kraus in channels:
+                out = apply_channel(rho, kraus)
+                self.assertTrue(qbg.is_physical_density(out))
+                self.assertLessEqual(
+                    qbg.negativity(out) - base,
+                    qbg.MONOTONICITY_TOL,
+                )
 
     def test_stochastic_mimics_are_ppt(self):
         for seed in range(20):
