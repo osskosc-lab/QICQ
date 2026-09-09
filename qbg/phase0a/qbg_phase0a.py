@@ -228,8 +228,16 @@ def stochastic_cases(seed: int) -> Dict[str, np.ndarray]:
 
 
 def monotonicity_audit(rho: np.ndarray) -> Tuple[bool, float]:
+    """Audit frozen local free channels for validity and non-increase.
+
+    A monotonicity PASS is only meaningful if every transformed output is
+    itself a valid density matrix. Invalid channel outputs therefore force
+    G4 to fail rather than being allowed to "pass" merely because the
+    resource value decreased.
+    """
     base = negativity(rho)
     max_increase = -np.inf
+    all_outputs_physical = True
     channels = [
         dephasing_kraus(0.25),
         dephasing_kraus(0.50),
@@ -240,9 +248,15 @@ def monotonicity_audit(rho: np.ndarray) -> Tuple[bool, float]:
     for ks in channels:
         for apply_channel in (apply_local_channel_a, apply_local_channel_b):
             out = apply_channel(rho, ks)
+            all_outputs_physical = (
+                all_outputs_physical and is_physical_density(out)
+            )
             inc = negativity(out) - base
             max_increase = max(max_increase, inc)
-    return max_increase <= MONOTONICITY_TOL, float(max_increase)
+    return (
+        all_outputs_physical
+        and max_increase <= MONOTONICITY_TOL
+    ), float(max_increase)
 
 
 def basis_invariance_audit(
