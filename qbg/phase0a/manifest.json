@@ -8,7 +8,7 @@
   "target": {
     "family": "locally_rotated_werner_bell_proxy",
     "werner_p_min": 0.75,
-    "werner_p_max": 1,
+    "werner_p_max": 1.0,
     "negativity_min": 0.2
   },
   "free_set_proxy": "two_qubit_separable_states",
