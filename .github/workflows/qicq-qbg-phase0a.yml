@@ -1,0 +1,54 @@
+name: QICQ QBG Phase 0A Qualification
+
+on:
+  push:
+    paths:
+      - 'qbg/**'
+      - '.github/workflows/qicq-qbg-phase0a.yml'
+      - 'README.md'
+  pull_request:
+    paths:
+      - 'qbg/**'
+      - '.github/workflows/qicq-qbg-phase0a.yml'
+      - 'README.md'
+  workflow_dispatch:
+
+jobs:
+  qbg-phase0a:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run deterministic unit tests
+        run: |
+          python qbg/phase0a/test_qbg_phase0a.py
+
+      - name: Run frozen 100-seed qualification
+        run: |
+          python qbg/phase0a/qbg_phase0a.py \
+            --seeds 100 \
+            --base-seed 20260909 \
+            --outdir artifacts/qbg_phase0a
+
+      - name: Display frozen decision
+        run: |
+          cat artifacts/qbg_phase0a/decision.txt
+          cat artifacts/qbg_phase0a/qualification_summary.json
+
+      - name: Upload qualification artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: qicq-qbg-phase0a
+          path: artifacts/qbg_phase0a/
