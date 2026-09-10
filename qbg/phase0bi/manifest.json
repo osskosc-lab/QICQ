@@ -1,0 +1,62 @@
+{
+  "protocol": "QICQ-QBG-P0BI",
+  "version": "0.1",
+  "status": "FROZEN_DETERMINISTIC_SDP_QUALIFICATION",
+  "parent_phase0ar_head": "d2bf56534c314f922c874ac9efa38b5e6f559fa8",
+  "claim_ceiling": "synthetic bipartite process-matrix CNS certification machinery only",
+  "tensor_order": ["A_I", "A_O", "B_I", "B_O"],
+  "dimensions": [2, 2, 2, 2],
+  "trace_normalization": 4.0,
+  "resource": {
+    "name": "generalized_causal_robustness_numeric",
+    "symbol": "R_CNS_g",
+    "free_robustness_tolerance": 5e-5,
+    "positive_cns_threshold": 1e-4
+  },
+  "solver": {
+    "python": "3.12.14",
+    "pip": "26.2.1",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "cvxpy": "1.9.2",
+    "scs": "3.2.11",
+    "eps_abs": 1e-7,
+    "eps_rel": 1e-7,
+    "max_iters": 200000,
+    "residual_gap_ceiling": 1e-5
+  },
+  "tolerances": {
+    "process_residual": 1e-8,
+    "representation_robustness": 5e-5,
+    "tested_free_mixing_nonincrease": 5e-5
+  },
+  "gold_cases": [
+    "definite_order_A_to_B",
+    "definite_order_B_to_A",
+    "causally_separable_equal_mixture",
+    "definite_order_offdiagonal_mimic",
+    "OCB_causally_nonseparable_reference"
+  ],
+  "core_gates": [
+    "B0_PROCESS_VALIDITY",
+    "B1_FREE_SET_CALIBRATION",
+    "B2_CNS_RESOURCE_CERTIFICATION",
+    "B3_ADVERSARIAL_FREE_MIMIC_EXCLUSION",
+    "B4_REPRESENTATION_ROBUSTNESS",
+    "B5_TESTED_FREE_MIXING_NONINCREASE",
+    "B6_SDP_NUMERICAL_CERTIFICATION"
+  ],
+  "particular_operational_witness": "NOT_IMPLEMENTED_IN_PHASE_0B_I",
+  "quantum_switch": "NOT_EXECUTED_IN_PHASE_0B_I",
+  "decision_if_all_core_pass": "P0BI_DETERMINISTIC_CNS_SDP_QUALIFIED",
+  "post_hoc_threshold_changes_allowed": false,
+  "reproducibility_hardening": {
+    "initial_qualification_run": 34479107644,
+    "initial_qualification_head": "25c98a952cc41c7a73a87bb51fff33ab7baca33e",
+    "scientific_spec_changed": false,
+    "thresholds_changed": false,
+    "gold_cases_changed": false,
+    "gates_changed": false,
+    "action": "Pin pip and all transitive package versions exactly as observed in the first successful qualification environment."
+  }
+}

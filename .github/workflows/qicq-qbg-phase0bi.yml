@@ -1,0 +1,63 @@
+name: QICQ QBG Phase 0B-I Deterministic SDP Qualification v0.1
+
+on:
+  push:
+    paths:
+      - 'qbg/phase0bi/**'
+      - '.github/workflows/qicq-qbg-phase0bi.yml'
+  pull_request:
+    paths:
+      - 'qbg/phase0bi/**'
+      - '.github/workflows/qicq-qbg-phase0bi.yml'
+  workflow_dispatch:
+
+jobs:
+  qbg-phase0bi:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+          cache: 'pip'
+          cache-dependency-path: qbg/phase0bi/requirements-lock.txt
+
+      - name: Install exact dependencies
+        run: |
+          python -m pip install pip==26.2.1
+          pip install -r qbg/phase0bi/requirements-lock.txt
+          python - <<'PY'
+          import cvxpy, numpy, scipy, scs
+          print('cvxpy', cvxpy.__version__)
+          print('numpy', numpy.__version__)
+          print('scipy', scipy.__version__)
+          print('scs', scs.__version__)
+          PY
+          pip freeze
+
+      - name: Run deterministic unit tests
+        run: python -m unittest qbg.phase0bi.test_qbg_phase0bi -v
+
+      - name: Run frozen deterministic SDP qualification
+        run: |
+          python -m qbg.phase0bi.qbg_phase0bi \
+            --outdir artifacts/qbg_phase0bi
+
+      - name: Display frozen decision
+        if: always()
+        run: |
+          if [ -f artifacts/qbg_phase0bi/decision.txt ]; then cat artifacts/qbg_phase0bi/decision.txt; fi
+          if [ -f artifacts/qbg_phase0bi/qualification_summary.json ]; then cat artifacts/qbg_phase0bi/qualification_summary.json; fi
+
+      - name: Upload qualification artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qicq-qbg-phase0bi-v0.1-${{ github.sha }}
+          path: artifacts/qbg_phase0bi/
+          if-no-files-found: warn
+          retention-days: 90
