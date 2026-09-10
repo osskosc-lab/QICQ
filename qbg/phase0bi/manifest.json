@@ -15,6 +15,7 @@
   },
   "solver": {
     "python": "3.12.14",
+    "pip": "26.2.1",
     "numpy": "2.5.3",
     "scipy": "1.18.1",
     "cvxpy": "1.9.2",
@@ -48,5 +49,14 @@
   "particular_operational_witness": "NOT_IMPLEMENTED_IN_PHASE_0B_I",
   "quantum_switch": "NOT_EXECUTED_IN_PHASE_0B_I",
   "decision_if_all_core_pass": "P0BI_DETERMINISTIC_CNS_SDP_QUALIFIED",
-  "post_hoc_threshold_changes_allowed": false
+  "post_hoc_threshold_changes_allowed": false,
+  "reproducibility_hardening": {
+    "initial_qualification_run": 34479107644,
+    "initial_qualification_head": "25c98a952cc41c7a73a87bb51fff33ab7baca33e",
+    "scientific_spec_changed": false,
+    "thresholds_changed": false,
+    "gold_cases_changed": false,
+    "gates_changed": false,
+    "action": "Pin pip and all transitive package versions exactly as observed in the first successful qualification environment."
+  }
 }
