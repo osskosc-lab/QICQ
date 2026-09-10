@@ -38,7 +38,7 @@ jobs:
 
       - name: Run frozen 256-seed adversarial qualification
         run: |
-          python qbg/phase0ar/qbg_phase0ar.py \
+          python -m qbg.phase0ar.qbg_phase0ar \
             --seeds 256 \
             --base-seed 20260910 \
             --outdir artifacts/qbg_phase0ar
