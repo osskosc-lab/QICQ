@@ -1,0 +1,57 @@
+name: QICQ QBG Phase 0A-R Qualification v0.1
+
+on:
+  push:
+    paths:
+      - 'qbg/phase0ar/**'
+      - 'qbg/phase0a/**'
+      - '.github/workflows/qicq-qbg-phase0ar.yml'
+  pull_request:
+    paths:
+      - 'qbg/phase0ar/**'
+      - 'qbg/phase0a/**'
+      - '.github/workflows/qicq-qbg-phase0ar.yml'
+  workflow_dispatch:
+
+jobs:
+  qbg-phase0ar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+          cache: 'pip'
+          cache-dependency-path: qbg/phase0ar/requirements-lock.txt
+
+      - name: Install exact dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r qbg/phase0ar/requirements-lock.txt
+
+      - name: Run deterministic unit tests
+        run: python -m unittest qbg.phase0ar.test_qbg_phase0ar -v
+
+      - name: Run frozen 256-seed adversarial qualification
+        run: |
+          python -m qbg.phase0ar.qbg_phase0ar \
+            --seeds 256 \
+            --base-seed 20260910 \
+            --outdir artifacts/qbg_phase0ar
+
+      - name: Display frozen decision
+        run: |
+          cat artifacts/qbg_phase0ar/decision.txt
+          cat artifacts/qbg_phase0ar/qualification_summary.json
+
+      - name: Upload qualification artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: qicq-qbg-phase0ar-v0.1-${{ github.sha }}
+          path: artifacts/qbg_phase0ar/
+          if-no-files-found: error
+          retention-days: 90

@@ -1,0 +1,101 @@
+{
+  "protocol": "QICQ-QBG-P0AR",
+  "version": "0.1",
+  "status": "FROZEN_ADVERSARIAL_GENERALIZATION_CHALLENGE",
+  "parent": {
+    "protocol": "QICQ-QBG-P0A",
+    "version": "0.1.1",
+    "head_sha": "bdc3dce5f7d4b8dce73a34f6c0f91e76e5ace613"
+  },
+  "claim_ceiling": "synthetic two-qubit qualification-gate mechanics only",
+  "primary_metric": {
+    "name": "resource_separation_margin_gN",
+    "definition": "min_target_negativity - max_mimic_negativity",
+    "pass_floor": 0.199999999
+  },
+  "baseline": {
+    "phase0a_target_min_negativity": 0.31254751364720484,
+    "phase0a_mimic_max_negativity": 3.409409165475825e-16
+  },
+  "execution": {
+    "seeds": 256,
+    "base_seed": 20260910,
+    "local_unitary_trials_per_state": 16,
+    "random_cptp_channels_per_state": 4
+  },
+  "targets": {
+    "werner_bell": {
+      "p_min": 0.61,
+      "p_max": 1.0,
+      "schedule": "even_midpoints_across_seed_index"
+    },
+    "schmidt_pure": {
+      "lambda_min": 0.05,
+      "lambda_max": 0.5,
+      "schedule": "even_midpoints_across_seed_index"
+    },
+    "negativity_min": 0.2
+  },
+  "mimics": {
+    "families": [
+      "maximal_product_coherence",
+      "variable_rank_separable_mixture_2_to_12",
+      "rotated_classical_common_cause",
+      "werner_separability_boundary"
+    ],
+    "werner_boundary_p_min": 0.3,
+    "werner_boundary_p_max": 0.3333333333333333,
+    "negativity_max": 1e-9
+  },
+  "structural_diagnostic": {
+    "name": "C_off",
+    "definition": "frobenius_norm(rho - diag(rho))",
+    "resource_semantics": "none",
+    "formal_relation_to_Q_delta_W": "NOT_PROVEN"
+  },
+  "robustness": {
+    "physical_tolerance": 1e-10,
+    "basis_tolerance": 1e-9,
+    "tested_channel_nonincrease_tolerance": 1e-9,
+    "tested_channels": [
+      "dephasing_lambda_0.25",
+      "dephasing_lambda_0.50",
+      "depolarizing_lambda_0.10",
+      "depolarizing_lambda_0.30",
+      "depolarizing_lambda_0.60",
+      "amplitude_damping_gamma_0.15",
+      "amplitude_damping_gamma_0.50",
+      "amplitude_damping_gamma_0.85",
+      "seeded_random_rank4_qubit_CPTP_x4"
+    ],
+    "scope": "apply_each_tested_channel_independently_to_subsystem_A_and_subsystem_B",
+    "output_validity_required": true,
+    "empirical_claim": "nonincrease under the frozen tested local-channel family only"
+  },
+  "optional_operational_witness": {
+    "name": "maximal_CHSH_Horodecki",
+    "target_min_strict": 2.000001,
+    "mimic_max": 2.000001,
+    "necessary_for_resource": false
+  },
+  "core_gates": [
+    "G0_PHYSICAL_VALIDITY",
+    "G1_STRUCTURAL_DIAGNOSTIC_INSUFFICIENT",
+    "G2_TARGET_RESOURCE_EXCLUSION",
+    "G3_LOCAL_BASIS_ROBUSTNESS",
+    "G4_TESTED_CHANNEL_NONINCREASE",
+    "G5_ADVERSARIAL_MIMIC_EXCLUSION"
+  ],
+  "optional_gate": "G6_OPTIONAL_CHSH_WITNESS",
+  "decisions": {
+    "core_and_g6_pass": "P0AR_CORE_GENERALIZES_WITH_CHSH",
+    "core_pass_g6_fail": "P0AR_CORE_GENERALIZES_CHSH_WITNESS_LIMITED",
+    "core_fail": "STOP_P0AR_<FAILED_CORE_GATES>"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1"
+  },
+  "post_hoc_rule": "No threshold or family changes after first qualification output; revisions require a new protocol version with failed lineage preserved."
+}
