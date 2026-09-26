@@ -1,6 +1,6 @@
 # QICQ QBG Phase 0A
 
-Current debug-hardened implementation: **v0.1.1** (parent qualification: v0.1).
+Current implementation: **v0.1.2** (lineage: v0.1 → v0.1.1 debug hardening → v0.1.2 reference-mimic gating and manifest consistency).
 
 Minimal synthetic qualification for the **Quantum Behavior Qualification Gate (QBG)**.
 
@@ -65,3 +65,12 @@ If Phase 0A core gates pass, Phase 0B is authorized only as a **process-matrix f
 - preserves the original v0.1 manifest as `manifest_v0.1.json`.
 
 See `QICQ_QBG_Phase0A_v0.1.1_Debug_Hardening.md`.
+
+## v0.1.2 reference-mimic gating and manifest consistency
+
+- the deterministic reference mimics of spec §3 are now gate inputs to G5 (negativity) and G6 (CHSH), which is stricter;
+- `manifest.json` is checked against the code constants by deterministic unit tests;
+- seeds, thresholds, families, decision labels and claim ceiling are unchanged;
+- `manifest_v0.1.json` and `manifest_v0.1.1.json` are preserved.
+
+See `QICQ_QBG_Phase0A_v0.1.2_Reference_Mimics_Manifest.md`.

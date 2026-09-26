@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""QICQ Quantum Behavior Qualification Gate (QBG) Phase 0A v0.1.1.
+"""QICQ Quantum Behavior Qualification Gate (QBG) Phase 0A v0.1.2.
 
 Synthetic two-qubit resource-proxy qualification only.
 
@@ -26,7 +26,7 @@ from typing import Dict, Iterable, List, Tuple
 
 import numpy as np
 
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 DEFAULT_SEEDS = 100
 DEFAULT_BASE_SEED = 20260909
 PHYSICAL_TOL = 1e-10
@@ -37,6 +37,26 @@ TARGET_NEGATIVITY_MIN = 0.20
 CHSH_MARGIN = 1e-6
 WERNER_P_MIN = 0.75
 WERNER_P_MAX = 1.00
+LOCAL_UNITARY_TRIALS_PER_CASE = 8
+
+# Frozen local free-channel family (unchanged since v0.1). Names match
+# manifest.json -> robustness.free_channels.
+FREE_CHANNEL_SPECS = (
+    ("dephasing", 0.25),
+    ("dephasing", 0.50),
+    ("depolarizing", 0.10),
+    ("depolarizing", 0.30),
+    ("depolarizing", 0.60),
+)
+
+# v0.1.2: deterministic reference mimics (spec section 3) that are gate
+# inputs to G5 (negativity <= MIMIC_TOL) and G6 (CHSH <= 2 + CHSH_MARGIN).
+REFERENCE_MIMICS = (
+    "fixed_order_coherent_product_mimic",
+    "classical_common_cause_mimic",
+    "product_mixed_mimic",
+    "maximally_mixed_mimic",
+)
 
 I2 = np.eye(2, dtype=complex)
 X = np.array([[0, 1], [1, 0]], dtype=complex)
@@ -232,12 +252,12 @@ def monotonicity_audit_details(rho: np.ndarray) -> Dict[str, object]:
     base = negativity(rho)
     max_increase = -np.inf
     all_outputs_physical = True
+    kraus_factories = {
+        "dephasing": dephasing_kraus,
+        "depolarizing": depolarizing_kraus,
+    }
     channels = [
-        dephasing_kraus(0.25),
-        dephasing_kraus(0.50),
-        depolarizing_kraus(0.10),
-        depolarizing_kraus(0.30),
-        depolarizing_kraus(0.60),
+        kraus_factories[kind](lam) for kind, lam in FREE_CHANNEL_SPECS
     ]
     for ks in channels:
         for apply_channel in (apply_local_channel_a, apply_local_channel_b):
@@ -268,7 +288,7 @@ def monotonicity_audit(rho: np.ndarray) -> Tuple[bool, float]:
 def basis_invariance_audit(
     rho: np.ndarray,
     rng: np.random.Generator,
-    trials: int = 8,
+    trials: int = LOCAL_UNITARY_TRIALS_PER_CASE,
 ) -> Tuple[bool, float]:
     base = negativity(rho)
     max_abs_delta = 0.0
@@ -380,6 +400,8 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
 
     target_rows = [r for r in rows if r["is_target"]]
     mimic_rows = [r for r in rows if not r["is_target"]]
+    # v0.1.2: deterministic reference mimics are gate inputs to G5 and G6.
+    reference_mimic_rows = [ref_by_name[name] for name in REFERENCE_MIMICS]
 
     g0 = bool(all_physical)
     g1 = bool(coherence_insufficiency)
@@ -393,6 +415,9 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
     g4 = bool(all_mono)
     g5 = bool(
         all(r["negativity"] <= MIMIC_TOL for r in mimic_rows)
+        and all(
+            r["negativity"] <= MIMIC_TOL for r in reference_mimic_rows
+        )
     )
     g6 = bool(
         all(
@@ -402,6 +427,10 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
         and all(
             r["chsh_smax"] <= 2.0 + CHSH_MARGIN
             for r in mimic_rows
+        )
+        and all(
+            r["chsh_smax"] <= 2.0 + CHSH_MARGIN
+            for r in reference_mimic_rows
         )
     )
 
@@ -471,6 +500,13 @@ def run_qualification(seeds: int, base_seed: int) -> Dict[str, object]:
             ),
             "mimic_max_chsh": float(
                 max(r["chsh_smax"] for r in mimic_rows)
+            ),
+            "reference_mimics_gated": list(REFERENCE_MIMICS),
+            "reference_mimic_max_negativity": float(
+                max(r["negativity"] for r in reference_mimic_rows)
+            ),
+            "reference_mimic_max_chsh": float(
+                max(r["chsh_smax"] for r in reference_mimic_rows)
             ),
             "basis_max_abs_delta": float(basis_max),
             "free_channel_outputs_all_physical": bool(

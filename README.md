@@ -32,6 +32,7 @@ See:
 
 - `qbg/phase0a/QICQ_QBG_Phase0A_v0.1.md` (original frozen qualification)
 - `qbg/phase0a/QICQ_QBG_Phase0A_v0.1.1_Debug_Hardening.md` (debug-hardening lineage)
+- `qbg/phase0a/QICQ_QBG_Phase0A_v0.1.2_Reference_Mimics_Manifest.md` (reference mimics gated in G5/G6; manifest consistency test)
 - `qbg/phase0a/manifest.json`
 - `qbg/phase0a/qbg_phase0a.py`
 - `qbg/phase0a/test_qbg_phase0a.py`
