@@ -1,7 +1,7 @@
 {
   "protocol": "QICQ-QBG-P0A",
-  "version": "0.1.2",
-  "status": "FROZEN_SYNTHETIC_QUALIFICATION_REFERENCE_MIMICS_GATED",
+  "version": "0.1.1",
+  "status": "FROZEN_SYNTHETIC_QUALIFICATION_DEBUG_HARDENED",
   "claim_ceiling": "two-qubit resource-proxy gate mechanics only",
   "seeds": 100,
   "base_seed": 20260909,
@@ -63,33 +63,5 @@
       "the QBG lockfile is included in workflow path triggers",
       "G4 now requires every frozen-channel output to remain a physical density matrix before monotonicity can pass"
     ]
-  },
-  "mimics_reference_deterministic": [
-    "fixed_order_coherent_product_mimic",
-    "classical_common_cause_mimic",
-    "product_mixed_mimic",
-    "maximally_mixed_mimic"
-  ],
-  "reference_mimics_are_gate_inputs": [
-    "G5_MIMIC_EXCLUSION",
-    "G6_OPTIONAL_CHSH_OPERATIONAL_WITNESS"
-  ],
-  "lineage": {
-    "parent_version": "0.1.1",
-    "parent_tag": "qbg-p0a-v0.1.1-frozen",
-    "parent_main_merge_commit": "b9bf9495bf41d9e008bb49bd0c92c293fb5a4807",
-    "parent_scientific_head": "bdc3dce5f7d4b8dce73a34f6c0f91e76e5ace613",
-    "preserved_manifests": [
-      "manifest_v0.1.json",
-      "manifest_v0.1.1.json"
-    ],
-    "claim_ceiling_changed": false,
-    "seeds_or_thresholds_changed": false,
-    "direction": "stricter",
-    "fixes": [
-      "G5 and G6 now also gate the four deterministic reference mimics of spec section 3 (previously computed and reported but not gated)",
-      "manifest.json is now checked against code constants by a deterministic unit test"
-    ],
-    "amendment_record": "QICQ_QBG_Phase0A_v0.1.2_Reference_Mimics_Manifest.md"
   }
 }
