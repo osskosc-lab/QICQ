@@ -7,12 +7,14 @@ on:
       - '.github/workflows/qicq-qbg-phase0a.yml'
       - 'README.md'
       - 'qbg/phase0a/requirements-lock.txt'
+      - 'requirements.txt'
   pull_request:
     paths:
       - 'qbg/**'
       - '.github/workflows/qicq-qbg-phase0a.yml'
       - 'README.md'
       - 'qbg/phase0a/requirements-lock.txt'
+      - 'requirements.txt'
   workflow_dispatch:
 
 jobs:

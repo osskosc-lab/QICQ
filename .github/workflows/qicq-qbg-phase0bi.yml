@@ -5,10 +5,12 @@ on:
     paths:
       - 'qbg/phase0bi/**'
       - '.github/workflows/qicq-qbg-phase0bi.yml'
+      - 'requirements.txt'
   pull_request:
     paths:
       - 'qbg/phase0bi/**'
       - '.github/workflows/qicq-qbg-phase0bi.yml'
+      - 'requirements.txt'
   workflow_dispatch:
 
 jobs:

@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - hqc-phase1-xenon-replication
+      - main
   pull_request:
     paths:
       - 'preregistration/**'
       - 'simulations/**'
       - 'requirements.txt'
+      - 'simulations/requirements-lock.txt'
       - '.github/workflows/hqc-phase1-design-audit.yml'
   workflow_dispatch:
 
@@ -19,15 +21,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.12.14
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.14'
 
-      - name: Install dependencies
+      - name: Install exact dependencies (simulations/requirements-lock.txt)
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r simulations/requirements-lock.txt
+
+      - name: Record environment
+        run: |
+          python --version
+          python -c "import numpy, scipy; print('numpy', numpy.__version__); print('scipy', scipy.__version__)"
 
       - name: Run frozen synthetic falsification audit
         run: |

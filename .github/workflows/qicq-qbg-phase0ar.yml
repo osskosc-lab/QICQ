@@ -6,11 +6,13 @@ on:
       - 'qbg/phase0ar/**'
       - 'qbg/phase0a/**'
       - '.github/workflows/qicq-qbg-phase0ar.yml'
+      - 'requirements.txt'
   pull_request:
     paths:
       - 'qbg/phase0ar/**'
       - 'qbg/phase0a/**'
       - '.github/workflows/qicq-qbg-phase0ar.yml'
+      - 'requirements.txt'
   workflow_dispatch:
 
 jobs:
