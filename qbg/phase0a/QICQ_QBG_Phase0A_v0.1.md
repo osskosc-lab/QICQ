@@ -117,6 +117,8 @@ Therefore a coherence-only quantity cannot be promoted to the resource measure i
 
 G0-G5 are the core Phase 0A qualification gates. G6 is intentionally optional and must not be treated as a necessary condition for quantum resource existence in general.
 
+> **Cross-reference (added 2026-09-26, v0.1 text and thresholds unchanged):** the G4 row above is the original v0.1 wording. The v0.1 implementation applied the frozen channels to subsystem A only. Phase 0A **v0.1.1** tightens G4, without changing any threshold, so that every frozen local channel is applied independently to subsystem A **and** subsystem B, and every channel output must be a physical density matrix before non-increase can pass. See `QICQ_QBG_Phase0A_v0.1.1_Debug_Hardening.md` (D1, D4 and the Amendment log).
+
 ## 6. Decision rule
 
 ### P0A_PROXY_QUALIFIED_WITH_OPERATIONAL_WITNESS

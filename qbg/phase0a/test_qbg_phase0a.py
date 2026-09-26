@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Deterministic unit tests for QICQ QBG Phase 0A v0.1."""
+"""Deterministic unit tests for QICQ QBG Phase 0A v0.1.1."""
 
 from __future__ import annotations
 
 import sys
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 import numpy as np
@@ -57,6 +58,49 @@ class QBGPhase0ATests(unittest.TestCase):
             max_increase,
             qbg.MONOTONICITY_TOL,
         )
+
+    def test_local_channel_paths_cover_both_subsystems(self):
+        rho = qbg.reference_states()["target_bell_proxy"]
+        channels = (
+            qbg.dephasing_kraus(0.25),
+            qbg.dephasing_kraus(0.50),
+            qbg.depolarizing_kraus(0.10),
+            qbg.depolarizing_kraus(0.30),
+            qbg.depolarizing_kraus(0.60),
+        )
+        base = qbg.negativity(rho)
+        for apply_channel in (
+            qbg.apply_local_channel_a,
+            qbg.apply_local_channel_b,
+        ):
+            for kraus in channels:
+                out = apply_channel(rho, kraus)
+                self.assertTrue(qbg.is_physical_density(out))
+                self.assertLessEqual(
+                    qbg.negativity(out) - base,
+                    qbg.MONOTONICITY_TOL,
+                )
+
+    def test_g4_rejects_non_trace_preserving_channel(self):
+        rho = qbg.reference_states()["target_bell_proxy"]
+        bad_out = 0.25 * rho
+        self.assertFalse(qbg.is_physical_density(bad_out))
+
+        def broken_local_channel(_rho, _kraus):
+            return bad_out
+
+        # Exercise the production G4 code path directly. If one frozen
+        # local-channel implementation were malformed, G4 must fail even
+        # though the reduced trace also reduces the raw negativity.
+        with patch.object(
+            qbg,
+            "apply_local_channel_a",
+            side_effect=broken_local_channel,
+        ):
+            details = qbg.monotonicity_audit_details(rho)
+        self.assertFalse(details["outputs_physical"])
+        self.assertTrue(details["monotonicity_only_pass"])
+        self.assertFalse(details["pass"])
 
     def test_stochastic_mimics_are_ppt(self):
         for seed in range(20):

@@ -1,5 +1,7 @@
 # QICQ QBG Phase 0A
 
+Current debug-hardened implementation: **v0.1.1** (parent qualification: v0.1).
+
 Minimal synthetic qualification for the **Quantum Behavior Qualification Gate (QBG)**.
 
 This line exists to test the gate mechanics before any full process-matrix / causal-nonseparability implementation is attempted.
@@ -54,3 +56,12 @@ Outputs:
 Phase 0B is not automatically a positive-mechanism phase.
 
 If Phase 0A core gates pass, Phase 0B is authorized only as a **process-matrix falsification phase**. It must freeze genuine process validity constraints, the causally separable free set, a certified CNS/QCO metric or witness, adversarial fixed-order+coherence mimics, and the operational access assumptions before execution.
+
+## v0.1.1 debug hardening
+
+- preserves the v0.1 claim ceiling and frozen thresholds;
+- extends G4 to apply every frozen local channel independently to subsystem A and subsystem B;
+- freezes the successful CI numerical environment via `requirements-lock.txt` and Python 3.12.14;
+- preserves the original v0.1 manifest as `manifest_v0.1.json`.
+
+See `QICQ_QBG_Phase0A_v0.1.1_Debug_Hardening.md`.
