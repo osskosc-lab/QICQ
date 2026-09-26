@@ -26,6 +26,8 @@ Phase 0B-I does not execute the Quantum Switch and does not define a B7 particul
 
 The SDP dual information is treated as numerical certification support, not silently promoted into an independent operational witness.
 
+Deferred (not tested by 0B-I; see spec §12–§13): intervention/tomography and operational access assumptions; classical/non-Markovian memory mimics; free-supermap monotonicity scope. B5 checks only OCB mixed with η=0.5 white noise (white noise and the resulting mixture are already in the free set, `R_CNS^g = 0`); it is not a free-supermap monotonicity test.
+
 ## Run
 
 ```bash
