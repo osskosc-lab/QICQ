@@ -1,3 +1,5 @@
+> **SUPERSEDED (2026-09-26):** this v1.1 protocol is superseded by [`H_QC_Phase1_Xenon_Isotope_Replication_v1.2.md`](H_QC_Phase1_Xenon_Isotope_Replication_v1.2.md) (pre-data amendment; no real-world data existed). The text below is retained unchanged for the record.
+
 # H_QC Phase 1 — Xenon Isotope Replication
 ## Frozen Preregistration Protocol v1.1
 
