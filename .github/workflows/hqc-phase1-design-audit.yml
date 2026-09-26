@@ -36,9 +36,18 @@ jobs:
           python --version
           python -c "import numpy, scipy; print('numpy', numpy.__version__); print('scipy', scipy.__version__)"
 
+      - name: Run design-audit unit tests
+        run: |
+          python simulations/test_hqc_phase1_design_audit.py
+
       - name: Run frozen synthetic falsification audit
         run: |
           python simulations/hqc_phase1_design_audit.py --reps 3000 --seed 20260809
+
+      - name: SD sensitivity (informational; v1.2 section 16b; does not gate CI)
+        run: |
+          python simulations/hqc_phase1_design_audit.py --reps 3000 --seed 20260809 --residual-sd 7 --outdir artifacts/hqc_phase1_design_audit/sensitivity_sd7_b20 --allow-check-failure
+          python simulations/hqc_phase1_design_audit.py --reps 3000 --seed 20260809 --residual-sd 7 --n-blocks 22 --outdir artifacts/hqc_phase1_design_audit/sensitivity_sd7_b22 --allow-check-failure
 
       - name: Display operating characteristics
         run: |

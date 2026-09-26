@@ -1,6 +1,6 @@
 # QICQ
 
-QICQ is maintained as a **falsification-first research framework**. Distinct research lines share a common claim firewall but do not automatically raise one another's evidential status.
+QICQ is maintained as a **falsification-first research framework**. Distinct research lines share a common claim firewall but do not raise one another's evidential status.
 
 ## Active research lines
 
@@ -10,8 +10,10 @@ The confirmatory biological target is deliberately narrow: independently test wh
 
 See:
 
-- `preregistration/H_QC_Phase1_Xenon_Isotope_Replication_v1.1.md`
+- `preregistration/H_QC_Phase1_Xenon_Isotope_Replication_v1.2.md` (current draft; DRAFT / NO REAL-WORLD DATA YET, not frozen; open PI decisions in its §18)
+- `preregistration/H_QC_Phase1_Xenon_Isotope_Replication_v1.1.md` (superseded, retained)
 - `simulations/hqc_phase1_design_audit.py`
+- `simulations/PREFLIGHT_AUDIT_2026-09-26.md` (v1.2 preflight audit incl. SD 6/7 sensitivity)
 
 A successful H_QC Phase 1 can establish only the preregistered xenon-isotope-dependent phenotype. It cannot by itself establish nuclear-spin causality, a quantum mechanism, or quantum consciousness.
 
