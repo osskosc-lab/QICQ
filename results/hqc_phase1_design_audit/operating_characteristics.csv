@@ -1,0 +1,6 @@
+scenario,description,reps,true_spin_contrast,mean_estimated_delta,sd_estimated_delta,G5_pass_rate,G6_pass_rate,G7_pass_rate,G9_pass_rate,strong_replication_rate,conditional_signal_rate,not_replicated_rate
+null,No isotope effect. G6 should almost never pass.,3000,0.0,0.008778172501777814,1.3452998357017203,0.9493333333333334,0.0,0.29733333333333334,0.013666666666666667,0.0,0.0,1.0
+target,Symmetric +7 pp spin-bearing replication signal.,3000,7.0,6.9882110436572145,1.3431879790744659,0.948,0.8116666666666666,1.0,0.9976666666666667,0.771,0.04066666666666666,0.18833333333333332
+spin0_confound,Primary contrast remains positive but the two spin-0 isotopes diverge by 8 pp; G5 should flag it.,3000,7.0,7.043369944464677,1.3479411487674477,0.017,0.813,1.0,0.9996666666666667,0.014,0.799,0.187
+one_spin_artifact,Average primary contrast can look positive but only one spin-bearing isotope drives it; G7 should fail often.,3000,7.0,7.014684618625683,1.3281861175049439,0.949,0.8176666666666667,0.10733333333333334,0.9976666666666667,0.10066666666666667,0.717,0.18233333333333332
+weak_effect,Nonzero but below the +3 pp SESOI; G6 should rarely license replication.,3000,2.0,2.044690468659445,1.3323922220413285,0.9533333333333334,0.005666666666666667,0.8186666666666667,0.23833333333333334,0.005666666666666667,0.0,0.9943333333333333
