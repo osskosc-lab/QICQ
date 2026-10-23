@@ -1,0 +1,16 @@
+H_QC Phase 1 synthetic design audit v1.1
+WARNING: DESIGN AUDIT ONLY — NOT BIOLOGICAL EVIDENCE
+              null | true Δ= 0.00 | G6=0.000 | G5=0.949 | G7=0.297 | strong=0.000
+            target | true Δ= 7.00 | G6=0.812 | G5=0.948 | G7=1.000 | strong=0.771
+    spin0_confound | true Δ= 7.00 | G6=0.813 | G5=0.017 | G7=1.000 | strong=0.014
+ one_spin_artifact | true Δ= 7.00 | G6=0.818 | G5=0.949 | G7=0.107 | strong=0.101
+       weak_effect | true Δ= 2.00 | G6=0.006 | G5=0.953 | G7=0.819 | strong=0.006
+Acceptance checks:
+  PASS  null_primary_false_positive_le_1pct
+  PASS  target_primary_detection_ge_70pct
+  PASS  target_strong_classification_ge_65pct
+  PASS  weak_effect_primary_pass_le_5pct
+  PASS  spin0_confound_g5_pass_le_10pct
+  PASS  one_spin_artifact_g7_pass_le_25pct
+Wrote artifacts/hqc_phase1_design_audit/operating_characteristics.csv
+Wrote artifacts/hqc_phase1_design_audit/audit_summary.json

@@ -1,0 +1,7 @@
+commit: b9b3d030e9287ef86c2fed36b9f77e05bed2b26b
+date: 2026-10-24T04:07:59+09:00
+OPENBLAS_CORETYPE: <auto>
+PY_SIM: 3.12.14 numpy 2.5.3 scipy 1.18.1
+PY_0A: 3.12.14 numpy 2.5.3 scipy 1.18.1
+PY_0AR: 3.12.14 numpy 2.5.3 scipy 1.18.1
+PY_0BI: 3.12.14 numpy 2.5.3 scipy 1.18.1
