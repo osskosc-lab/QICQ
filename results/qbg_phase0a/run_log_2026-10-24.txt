@@ -1,0 +1,45 @@
+test_basis_audit_default_trials_match_manifest (__main__.QBGPhase0ATests.test_basis_audit_default_trials_match_manifest) ... ok
+test_coherence_is_not_sufficient (__main__.QBGPhase0ATests.test_coherence_is_not_sufficient) ... ok
+test_entangled_reference_mimic_fails_g5_and_g6 (__main__.QBGPhase0ATests.test_entangled_reference_mimic_fails_g5_and_g6) ... ok
+test_frozen_local_channels_do_not_increase_negativity (__main__.QBGPhase0ATests.test_frozen_local_channels_do_not_increase_negativity) ... ok
+test_full_qualification_smoke (__main__.QBGPhase0ATests.test_full_qualification_smoke) ... ok
+test_g4_rejects_non_trace_preserving_channel (__main__.QBGPhase0ATests.test_g4_rejects_non_trace_preserving_channel) ... ok
+test_local_basis_invariance_of_negativity (__main__.QBGPhase0ATests.test_local_basis_invariance_of_negativity) ... ok
+test_local_channel_paths_cover_both_subsystems (__main__.QBGPhase0ATests.test_local_channel_paths_cover_both_subsystems) ... ok
+test_manifest_gate_names_match_result (__main__.QBGPhase0ATests.test_manifest_gate_names_match_result) ... ok
+test_manifest_matches_code_constants (__main__.QBGPhase0ATests.test_manifest_matches_code_constants) ... ok
+test_preserved_manifests_keep_frozen_parameters (__main__.QBGPhase0ATests.test_preserved_manifests_keep_frozen_parameters) ... ok
+test_reference_mimics_pass_g5_g6_thresholds (__main__.QBGPhase0ATests.test_reference_mimics_pass_g5_g6_thresholds) ... ok
+test_reference_states_are_physical (__main__.QBGPhase0ATests.test_reference_states_are_physical) ... ok
+test_stochastic_mimics_are_ppt (__main__.QBGPhase0ATests.test_stochastic_mimics_are_ppt) ... ok
+test_summary_reports_reference_mimic_maxima (__main__.QBGPhase0ATests.test_summary_reports_reference_mimic_maxima) ... ok
+test_target_proxy_exceeds_frozen_margin (__main__.QBGPhase0ATests.test_target_proxy_exceeds_frozen_margin) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.157s
+
+OK
+QICQ QBG Phase 0A v0.1.2
+SYNTHETIC TWO-QUBIT RESOURCE-PROXY QUALIFICATION ONLY. NOT A PROCESS-MATRIX CNS/QCO TEST; NOT BIOLOGICAL OR CONSCIOUSNESS EVIDENCE.
+PASS  G0_PHYSICAL_VALIDITY
+PASS  G1_COHERENCE_NOT_SUFFICIENT
+PASS  G2_TARGET_RESOURCE_EXCLUSION
+PASS  G3_LOCAL_BASIS_ROBUSTNESS
+PASS  G4_FREE_OPERATION_MONOTONICITY
+PASS  G5_MIMIC_EXCLUSION
+PASS  G6_OPTIONAL_CHSH_OPERATIONAL_WITNESS
+target_min_negativity: 0.3125475136472048
+mimic_max_negativity: 3.283669267264406e-16
+target_min_chsh: 2.121499528744376
+mimic_max_chsh: 2.0000000000000013
+reference_mimics_gated: ['fixed_order_coherent_product_mimic', 'classical_common_cause_mimic', 'product_mixed_mimic', 'maximally_mixed_mimic']
+reference_mimic_max_negativity: 0.0
+reference_mimic_max_chsh: 2.0
+basis_max_abs_delta: 8.326672684688674e-16
+free_channel_outputs_all_physical: True
+monotonicity_max_increase: 2.6697540609917634e-16
+reference_target_q_delta: 0.7071067811865474
+reference_coherent_mimic_q_delta: 0.7071067811865474
+reference_target_negativity: 0.4999999999999999
+reference_coherent_mimic_negativity: 0.0
+DECISION: P0A_PROXY_QUALIFIED_WITH_OPERATIONAL_WITNESS

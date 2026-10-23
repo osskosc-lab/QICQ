@@ -1,0 +1,33 @@
+test_definite_order_calibration (qbg.phase0bi.test_qbg_phase0bi.TestQBGPhase0BI.test_definite_order_calibration) ... ok
+test_free_mixture_has_zero_numeric_robustness (qbg.phase0bi.test_qbg_phase0bi.TestQBGPhase0BI.test_free_mixture_has_zero_numeric_robustness) ... ok
+test_gold_cases_are_valid_processes (qbg.phase0bi.test_qbg_phase0bi.TestQBGPhase0BI.test_gold_cases_are_valid_processes) ... ok
+test_ocb_reference_has_positive_numeric_robustness (qbg.phase0bi.test_qbg_phase0bi.TestQBGPhase0BI.test_ocb_reference_has_positive_numeric_robustness) ... ok
+test_ocb_reference_is_not_itself_definite_order (qbg.phase0bi.test_qbg_phase0bi.TestQBGPhase0BI.test_ocb_reference_is_not_itself_definite_order) ... ok
+test_offdiagonal_mimic_is_structural_but_definite_order (qbg.phase0bi.test_qbg_phase0bi.TestQBGPhase0BI.test_offdiagonal_mimic_is_structural_but_definite_order) ... ok
+test_party_swap_is_involution (qbg.phase0bi.test_qbg_phase0bi.TestQBGPhase0BI.test_party_swap_is_involution) ... ok
+test_replacement_maps_are_idempotent (qbg.phase0bi.test_qbg_phase0bi.TestQBGPhase0BI.test_replacement_maps_are_idempotent) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.159s
+
+OK
+QICQ QBG Phase 0B-I v0.1
+DETERMINISTIC SYNTHETIC BIPARTITE PROCESS-MATRIX SDP QUALIFICATION ONLY. NOT A QUANTUM-SWITCH RUN; NOT EXPERIMENTAL, BIOLOGICAL, OR CONSCIOUSNESS EVIDENCE.
+PASS  B0_PROCESS_VALIDITY
+PASS  B1_FREE_SET_CALIBRATION
+PASS  B2_CNS_RESOURCE_CERTIFICATION
+PASS  B3_ADVERSARIAL_FREE_MIMIC_EXCLUSION
+PASS  B4_REPRESENTATION_ROBUSTNESS
+PASS  B5_TESTED_FREE_MIXING_NONINCREASE
+PASS  B6_SDP_NUMERICAL_CERTIFICATION
+OCB_R_CNS_g: 0.1715728472869511
+party_swapped_OCB_R_CNS_g: 0.17157284728697197
+representation_abs_delta: 2.0872192862952943e-14
+OCB_free_mixture_eta_0.5_R_CNS_g: 0.0
+offdiag_mimic_R_CNS_g_raw: 5.462076124729265e-09
+offdiag_mimic_C_off: 0.8
+free_case_R_CNS_g_raw: {'definite_order_A_to_B': 4.47563111016791e-08, 'definite_order_B_to_A': -3.54491754839259e-08, 'causally_separable_equal_mixture': 3.3224183404456653e-09}
+max_order_residual: 0.0
+quantum_switch_executed: False
+particular_operational_witness_executed: False
+DECISION: P0BI_DETERMINISTIC_CNS_SDP_QUALIFIED

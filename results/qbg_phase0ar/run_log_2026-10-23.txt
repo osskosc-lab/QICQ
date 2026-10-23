@@ -1,0 +1,38 @@
+test_expanded_channel_family_preserves_physicality_and_nonincrease (qbg.phase0ar.test_qbg_phase0ar.TestQBGPhase0AR.test_expanded_channel_family_preserves_physicality_and_nonincrease) ... ok
+test_generated_mimics_remain_separable (qbg.phase0ar.test_qbg_phase0ar.TestQBGPhase0AR.test_generated_mimics_remain_separable) ... ok
+test_low_p_werner_is_resource_positive_but_chsh_limited (qbg.phase0ar.test_qbg_phase0ar.TestQBGPhase0AR.test_low_p_werner_is_resource_positive_but_chsh_limited) ... ok
+test_primary_margin_definition_matches_extrema (qbg.phase0ar.test_qbg_phase0ar.TestQBGPhase0AR.test_primary_margin_definition_matches_extrema) ... ok
+test_random_cptp_kraus_completeness (qbg.phase0ar.test_qbg_phase0ar.TestQBGPhase0AR.test_random_cptp_kraus_completeness) ... ok
+test_reproducibility (qbg.phase0ar.test_qbg_phase0ar.TestQBGPhase0AR.test_reproducibility) ... ok
+test_small_qualification_core_survives_and_chsh_is_witness_limited (qbg.phase0ar.test_qbg_phase0ar.TestQBGPhase0AR.test_small_qualification_core_survives_and_chsh_is_witness_limited) ... ok
+test_structural_diagnostic_can_be_large_on_separable_product (qbg.phase0ar.test_qbg_phase0ar.TestQBGPhase0AR.test_structural_diagnostic_can_be_large_on_separable_product) ... ok
+test_werner_boundary_mimic_is_separable (qbg.phase0ar.test_qbg_phase0ar.TestQBGPhase0AR.test_werner_boundary_mimic_is_separable) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.878s
+
+OK
+QICQ QBG Phase 0A-R v0.1
+SYNTHETIC TWO-QUBIT ADVERSARIAL GATE-MECHANICS TEST ONLY. NOT A PROCESS-MATRIX CNS/QCO TEST; NOT PHYSICAL-MECHANISM, BIOLOGICAL, OR CONSCIOUSNESS EVIDENCE.
+PASS  G0_PHYSICAL_VALIDITY
+PASS  G1_STRUCTURAL_DIAGNOSTIC_INSUFFICIENT
+PASS  G2_TARGET_RESOURCE_EXCLUSION
+PASS  G3_LOCAL_BASIS_ROBUSTNESS
+PASS  G4_TESTED_CHANNEL_NONINCREASE
+PASS  G5_ADVERSARIAL_MIMIC_EXCLUSION
+FAIL  G6_OPTIONAL_CHSH_WITNESS
+resource_separation_margin_gN: 0.20807128906249944
+target_negativity: {'min': 0.2080712890624999, 'q25': 0.31417115078657604, 'median': 0.40134844762056915, 'q75': 0.4679162347342998, 'max': 0.49999922752320686}
+mimic_negativity: {'min': 0.0, 'q25': 0.0, 'median': 0.0, 'q75': 2.3194501830645504e-17, 'max': 4.3744315765172417e-16}
+target_chsh: {'min': 1.7274950120691035, 'q25': 2.2357554666883206, 'median': 2.5165154007936064, 'q75': 2.729896012399433, 'max': 2.8284249398527193}
+mimic_chsh: {'min': 0.0009284098405301214, 'q25': 0.8477461538360117, 'median': 0.9288142198710794, 'q75': 1.94636456049423, 'max': 2.0000000000000013}
+paired_negativity_margin: {'min': 0.20807128906249986, 'q25': 0.28091064453125003, 'median': 0.3537499999999997, 'q75': 0.42658935546874965, 'max': 0.4994287109374999}
+basis_max_abs_delta: 9.992007221626409e-16
+tested_channel_max_increase: 3.4726431405583906e-16
+all_tested_channel_outputs_physical: True
+all_tested_channel_kraus_complete: True
+reference_bell_c_off: 0.7071067811865474
+reference_product_c_off: 0.8660254037844383
+reference_bell_negativity: 0.4999999999999999
+reference_product_negativity: 6.237923272134049e-18
+DECISION: P0AR_CORE_GENERALIZES_CHSH_WITNESS_LIMITED

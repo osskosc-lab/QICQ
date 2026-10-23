@@ -55,3 +55,9 @@ Synthetic qualification is evidence about **gate mechanics only** unless a proto
 A future QBG Phase 0B may begin only after Phase 0A core gates pass. Phase 0B must replace the density-operator proxy with a genuine process representation and pre-freeze process validity constraints, the causally separable free set, a certified CNS/QCO quantity or witness, adversarial fixed-order+coherence mimics, operational access assumptions, and free-supermap monotonicity scope before execution.
 
 No synthetic result in this repository is evidence for a biological or quantum-consciousness mechanism.
+
+## Results and reproducibility
+
+- Re-run records: `results/RESULTS_<date>.md` and per-phase outputs in `results/<phase>/`.
+- Additional tests (H_QC unit tests, determinism, BLAS sweep): `results/ADDITIONAL_TESTS_2026-10-24.md`; H_QC tests: `python -m unittest simulations.test_hqc_phase1_design_audit -v`.
+- One-command re-run, determinism comparison, and known platform (OpenBLAS kernel) sensitivity: `docs/REPRODUCIBILITY.md`.

@@ -1,0 +1,85 @@
+{
+  "warning": "SYNTHETIC TWO-QUBIT RESOURCE-PROXY QUALIFICATION ONLY. NOT A PROCESS-MATRIX CNS/QCO TEST; NOT BIOLOGICAL OR CONSCIOUSNESS EVIDENCE.",
+  "protocol": "QICQ-QBG-P0A",
+  "version": "0.1.2",
+  "seeds": 100,
+  "base_seed": 20260909,
+  "thresholds": {
+    "target_negativity_min": 0.2,
+    "mimic_tol": 1e-09,
+    "basis_tol": 1e-09,
+    "monotonicity_tol": 1e-09,
+    "chsh_threshold": 2.000001,
+    "werner_p_min": 0.75,
+    "werner_p_max": 1.0
+  },
+  "gates": {
+    "G0_PHYSICAL_VALIDITY": true,
+    "G1_COHERENCE_NOT_SUFFICIENT": true,
+    "G2_TARGET_RESOURCE_EXCLUSION": true,
+    "G3_LOCAL_BASIS_ROBUSTNESS": true,
+    "G4_FREE_OPERATION_MONOTONICITY": true,
+    "G5_MIMIC_EXCLUSION": true,
+    "G6_OPTIONAL_CHSH_OPERATIONAL_WITNESS": true
+  },
+  "core_gates_pass": true,
+  "decision": "P0A_PROXY_QUALIFIED_WITH_OPERATIONAL_WITNESS",
+  "summary": {
+    "target_min_negativity": 0.3125475136472048,
+    "mimic_max_negativity": 3.283669267264406e-16,
+    "target_min_chsh": 2.121499528744376,
+    "mimic_max_chsh": 2.0000000000000013,
+    "reference_mimics_gated": [
+      "fixed_order_coherent_product_mimic",
+      "classical_common_cause_mimic",
+      "product_mixed_mimic",
+      "maximally_mixed_mimic"
+    ],
+    "reference_mimic_max_negativity": 0.0,
+    "reference_mimic_max_chsh": 2.0,
+    "basis_max_abs_delta": 8.326672684688674e-16,
+    "free_channel_outputs_all_physical": true,
+    "monotonicity_max_increase": 2.6697540609917634e-16,
+    "reference_target_q_delta": 0.7071067811865474,
+    "reference_coherent_mimic_q_delta": 0.7071067811865474,
+    "reference_target_negativity": 0.4999999999999999,
+    "reference_coherent_mimic_negativity": 0.0
+  },
+  "reference_cases": [
+    {
+      "name": "target_bell_proxy",
+      "physical": true,
+      "q_delta": 0.7071067811865474,
+      "negativity": 0.4999999999999999,
+      "chsh_smax": 2.8284271247461894
+    },
+    {
+      "name": "fixed_order_coherent_product_mimic",
+      "physical": true,
+      "q_delta": 0.7071067811865474,
+      "negativity": 0.0,
+      "chsh_smax": 1.9999999999999996
+    },
+    {
+      "name": "classical_common_cause_mimic",
+      "physical": true,
+      "q_delta": 0.0,
+      "negativity": 0.0,
+      "chsh_smax": 2.0
+    },
+    {
+      "name": "product_mixed_mimic",
+      "physical": true,
+      "q_delta": 0.4999999999999999,
+      "negativity": 0.0,
+      "chsh_smax": 0.0
+    },
+    {
+      "name": "maximally_mixed_mimic",
+      "physical": true,
+      "q_delta": 0.0,
+      "negativity": 0.0,
+      "chsh_smax": 0.0
+    }
+  ]
+}
