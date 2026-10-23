@@ -32,4 +32,4 @@ PY_SIM="${PY_SIM:-python}"; PY_0A="${PY_0A:-python}"; PY_0AR="${PY_0AR:-python}"
 } > "$LOG/qbg_phase0bi.log" 2>&1
 
 grep -h "DECISION" "$LOG"/qbg_*.log
-grep -h -A7 "Acceptance checks" "$LOG/hqc_phase1_design_audit.log"
+grep -h -A6 "Acceptance checks" "$LOG/hqc_phase1_design_audit.log"

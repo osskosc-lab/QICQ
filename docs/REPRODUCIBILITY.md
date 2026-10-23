@@ -40,3 +40,9 @@ reproduced exactly with `OPENBLAS_CORETYPE=Haswell` (likely the kernel used on t
 not verified on the runner itself).
 
 To reproduce the recorded CI values bit-for-bit on another machine: `export OPENBLAS_CORETYPE=Haswell`.
+
+The same sensitivity applies to 0A-R and 0B-I at the last-digit level. With `OPENBLAS_CORETYPE=Haswell`
+on the box (2026-10-24), 0A-R gave `resource_separation_margin_gN = 0.20807128906249964` (box auto-detect:
+`0.20807128906249944`) and some 0B-I raw values differed in trailing digits; both decisions were unchanged
+(`P0AR_CORE_GENERALIZES_CHSH_WITNESS_LIMITED`, `P0BI_DETERMINISTIC_CNS_SDP_QUALIFIED`; OCB `R_CNS^g` printed
+as `0.1715728472869511` in both). H_QC preflight outputs were byte-identical across runs.
